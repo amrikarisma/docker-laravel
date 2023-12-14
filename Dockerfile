@@ -57,6 +57,7 @@ RUN mkdir /var/log/php
 RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
 # Copy PHP and Nginx config
+COPY --chown=root:root supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 COPY --chown=root:root php.ini /usr/local/etc/php/conf.d/app.ini
 COPY --chown=root:root nginx.conf /etc/nginx/sites-enabled/default
 
