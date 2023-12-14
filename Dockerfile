@@ -53,13 +53,16 @@ RUN addgroup --gid 1000 www \
 	www
 
 # PHP Error Log Files
-RUN mkdir /var/log/php
-RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+RUN mkdir /var/log/php && touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+RUN mkdir /var/bash
 
 # Copy PHP and Nginx config
 COPY --chown=root:root supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 COPY --chown=root:root php.ini /usr/local/etc/php/conf.d/app.ini
 COPY --chown=root:root nginx.conf /etc/nginx/sites-enabled/default
+COPY --chown=root:root schedule.sh /var/bash/schedule.sh
+
+RUN chmod +x /var/bash/schedule.sh
 
 # Install Node.js
 RUN npm install npm@latest -g
